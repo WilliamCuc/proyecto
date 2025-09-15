@@ -8,6 +8,7 @@ import {
 } from "../../services/clientesService";
 import { Cliente } from "../../models/Cliente";
 import "./modal-anim.css";
+import Menu from "../../components/Menu";
 
 export default function ClientesPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -25,6 +26,13 @@ export default function ClientesPage() {
   const [showModal, setShowModal] = useState(false);
   const [modalClosing, setModalClosing] = useState(false);
   const [editCliente, setEditCliente] = useState<Cliente | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 25;
+  const totalPages = Math.ceil(clientes.length / pageSize);
+  const paginatedClientes = clientes.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   useEffect(() => {
     cargarClientes();
@@ -113,47 +121,7 @@ export default function ClientesPage() {
   return (
     <div className="container">
       <div className="header-logo text-center mt-5 mb-3">Clientes</div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary rounded mb-4">
-        <div className="container-fluid">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link" href="/dashboard">
-                Dashboard
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/polizas">
-                Pólizas
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/aseguradoras">
-                Aseguradoras
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/seguimientos">
-                Seguimientos
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/alertas">
-                Alertas
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/reportes">
-                Reportes
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/login">
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <Menu />
       <div className="card shadow mb-4">
         <div className="card-body">
           <h2 className="card-title mb-4">Listado de Clientes</h2>
@@ -165,7 +133,10 @@ export default function ClientesPage() {
           >
             Agregar Cliente
           </button>
-          <div className="table-responsive">
+          <div
+            className="table-responsive"
+            style={{ maxHeight: "400px", overflowY: "auto" }}
+          >
             <table className="table table-striped table-hover">
               <thead className="table-dark">
                 <tr>
@@ -176,7 +147,7 @@ export default function ClientesPage() {
                 </tr>
               </thead>
               <tbody>
-                {clientes.map((c: Cliente) => (
+                {paginatedClientes.map((c: Cliente) => (
                   <tr key={c.id_cliente}>
                     <td>
                       {c.primer_nombre} {c.segundo_nombre} {c.primer_apellido}{" "}
@@ -205,6 +176,50 @@ export default function ClientesPage() {
               </tbody>
             </table>
           </div>
+          {/* Paginación */}
+          <nav aria-label="Paginación de clientes">
+            <ul className="pagination justify-content-center">
+              <li
+                className={`page-item${currentPage === 1 ? " disabled" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  &laquo;
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li
+                  key={i + 1}
+                  className={`page-item${
+                    currentPage === i + 1 ? " active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li
+                className={`page-item${
+                  currentPage === totalPages ? " disabled" : ""
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  &raquo;
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
       {/* Modal para crear nuevo cliente */}
