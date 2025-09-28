@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { AuthService } from "../../services/authService";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -12,6 +12,14 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { login, isAuthenticated } = useAuth();
+
+  // Si ya está autenticado, redirigir al dashboard
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,16 +36,13 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const response = await AuthService.login(
-        formData.usuario,
-        formData.contrasena
-      );
+      const success = await login(formData.usuario, formData.contrasena);
 
-      if (response.success && response.user) {
-        // Login exitoso
-        router.push("/dashboard");
+      if (success) {
+        // Login exitoso - redirigir inmediatamente
+        router.replace("/dashboard");
       } else {
-        setError(response.message || "Error al iniciar sesión");
+        setError("Usuario o contraseña incorrectos");
       }
     } catch (error) {
       setError("Error de conexión");

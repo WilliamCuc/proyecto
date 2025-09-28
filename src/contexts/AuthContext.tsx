@@ -31,6 +31,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const response = await AuthService.login(usuario, contrasena);
     if (response.success && response.user) {
       setUser(response.user);
+      // Pequeña pausa para asegurar que el estado se actualice
+      await new Promise((resolve) => setTimeout(resolve, 100));
       return true;
     }
     return false;
