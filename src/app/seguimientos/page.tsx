@@ -14,11 +14,12 @@ export default function SeguimientosPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [modalClosing, setModalClosing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [editingSeguimiento, setEditingSeguimiento] =
     useState<Seguimiento | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [total, setTotal] = useState(0);
 
   const [formData, setFormData] = useState({

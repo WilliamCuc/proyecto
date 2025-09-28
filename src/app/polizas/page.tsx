@@ -23,10 +23,11 @@ export default function PolizasPage() {
   >([]);
   const [showModal, setShowModal] = useState(false);
   const [modalClosing, setModalClosing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [editingPoliza, setEditingPoliza] = useState<Poliza | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [total, setTotal] = useState(0);
 
   const [formData, setFormData] = useState({
