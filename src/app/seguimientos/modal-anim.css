@@ -1,0 +1,29 @@
+.animate-modal {
+  animation: modalFadeIn 0.4s;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-modal-close {
+  animation: modalFadeOut 0.4s;
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}

@@ -9,4 +9,10 @@ export interface Poliza {
   monto: number;
   id_estado: number;
   fecha_registro: string;
+
+  // Campos relacionados para mostrar nombres
+  cliente_nombre?: string;
+  aseguradora_nombre?: string;
+  tipo_seguro_nombre?: string;
+  estado_nombre?: string;
 }

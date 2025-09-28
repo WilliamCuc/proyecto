@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import {
   FaHome,
@@ -9,16 +11,28 @@ import {
   FaChartBar,
   FaSignOutAlt,
   FaClipboardList,
+  FaUser,
 } from "react-icons/fa";
+import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Menu() {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary rounded mb-4">
       <div className="container-fluid">
-        <ul className="navbar-nav mb-2 mb-lg-0">
+        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
             <a className="nav-link d-flex align-items-center" href="/dashboard">
               <FaHome className="me-2" /> <span>Dashboard</span>
@@ -87,12 +101,38 @@ export default function Menu() {
               <FaChartBar className="me-2" /> <span>Reportes</span>
             </a>
           </li>
-          <li className="nav-item ms-auto">
-            <a className="nav-link d-flex align-items-center" href="/login">
-              <FaSignOutAlt className="me-2" /> <span>Logout</span>
-            </a>
-          </li>
         </ul>
+        <div className="navbar-nav ms-auto">
+          <div className="nav-item dropdown">
+            <a
+              className="nav-link dropdown-toggle d-flex align-items-center text-white"
+              href="#"
+              id="userDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <FaUser className="me-2" />
+              <span>
+                {user?.primer_nombre} {user?.primer_apellido}
+              </span>
+            </a>
+            <ul
+              className="dropdown-menu dropdown-menu-end"
+              aria-labelledby="userDropdown"
+            >
+              <li>
+                <button
+                  className="dropdown-item d-flex align-items-center"
+                  onClick={handleLogout}
+                >
+                  <FaSignOutAlt className="me-2" />
+                  <span>Cerrar Sesión</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </nav>
   );

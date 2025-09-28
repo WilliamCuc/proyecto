@@ -4,4 +4,6 @@ export interface Seguimiento {
   id_usuario: number;
   fecha: string;
   nota: string;
+  cliente_nombre?: string;
+  usuario_nombre?: string;
 }
