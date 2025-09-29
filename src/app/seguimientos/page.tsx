@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { Seguimiento } from "../../models/Seguimiento";
 import { SeguimientosService } from "../../services/seguimientosService";
 import { getClientes } from "../../services/clientesService";
@@ -8,8 +9,10 @@ import { Cliente } from "../../models/Cliente";
 import "./modal-anim.css";
 import Menu from "../../components/Menu";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function SeguimientosPage() {
+  const { user } = useAuth();
   const [seguimientos, setSeguimientos] = useState<Seguimiento[]>([]);
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +27,7 @@ export default function SeguimientosPage() {
 
   const [formData, setFormData] = useState({
     id_cliente: 0,
-    id_usuario: 1, // Por ahora hardcoded
+    id_usuario: user?.id_usuario || 1, // Usuario autenticado
     fecha: new Date().toISOString().slice(0, 16), // formato datetime-local
     nota: "",
   });
@@ -54,6 +57,16 @@ export default function SeguimientosPage() {
     loadSeguimientos();
     loadClientes();
   }, []);
+
+  // Actualizar el usuario en formData cuando se carga
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        id_usuario: user.id_usuario,
+      }));
+    }
+  }, [user]);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -116,7 +129,7 @@ export default function SeguimientosPage() {
       setEditingSeguimiento(null);
       setFormData({
         id_cliente: 0,
-        id_usuario: 1,
+        id_usuario: user?.id_usuario || 1,
         fecha: new Date().toISOString().slice(0, 16),
         nota: "",
       });
@@ -140,7 +153,15 @@ export default function SeguimientosPage() {
   return (
     <ProtectedRoute>
       <div className="container">
-        <div className="header-logo text-center mt-5 mb-3">Seguimientos</div>
+        <div className="d-flex justify-content-center mt-2 mb-3">
+          <Image
+            src="/images/logos/distrito-diamante-logo.png"
+            alt="Distrito Diamante CRM"
+            width={200}
+            height={80}
+            priority
+          />
+        </div>
         <Menu />
         <div className="card shadow mb-4">
           <div className="card-body">

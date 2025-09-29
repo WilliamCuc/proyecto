@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
+import "./Menu.css";
 
 export default function Menu() {
   const { user, logout } = useAuth();
@@ -30,7 +31,13 @@ export default function Menu() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary rounded mb-4">
+    <nav
+      className="navbar navbar-expand-lg navbar-dark rounded mb-4 corporate-menu"
+      style={{
+        backgroundColor: "#0a4c86",
+        boxShadow: "0 2px 10px rgba(10, 76, 134, 0.3)",
+      }}
+    >
       <div className="container-fluid">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">

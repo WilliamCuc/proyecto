@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -53,15 +54,35 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div
+      className="min-vh-100 d-flex align-items-center justify-content-center"
+      style={{
+        background:
+          "linear-gradient(135deg, #0a4c86 0%, #1a5c96 50%, #0a4c86 100%)",
+        backgroundAttachment: "fixed",
+      }}
+    >
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-4">
-            <div className="card shadow">
-              <div className="card-body p-5">
+            <div
+              className="card shadow-lg border-0"
+              style={{ borderRadius: "15px" }}
+            >
+              <div
+                className="card-body p-5"
+                style={{ backgroundColor: "rgba(255, 255, 255, 0.98)" }}
+              >
                 <div className="text-center mb-4">
-                  <h1 className="h3 mb-3 fw-bold text-primary">CRM Seguros</h1>
-                  <p className="text-muted">Distrito Diamante</p>
+                  <div className="d-flex justify-content-center mb-3">
+                    <Image
+                      src="/images/logos/distrito-diamante-logo.png"
+                      alt="Distrito Diamante CRM"
+                      width={400}
+                      height={160}
+                      priority
+                    />
+                  </div>
                 </div>
 
                 {error && (
@@ -136,7 +157,7 @@ export default function LoginPage() {
 
                 <div className="text-center mt-4">
                   <small className="text-muted">
-                    © 2024 CRM Seguros. Todos los derechos reservados.
+                    © 2024 Distrito Diamante. Todos los derechos reservados.
                   </small>
                 </div>
               </div>

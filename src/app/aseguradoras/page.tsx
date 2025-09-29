@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   getAseguradoras,
   addAseguradora,
@@ -106,7 +107,15 @@ export default function AseguradorasPage() {
 
   return (
     <div className="container">
-      <div className="header-logo text-center mt-5 mb-3">Aseguradoras</div>
+      <div className="d-flex justify-content-center mt-2 mb-3">
+        <Image
+          src="/images/logos/distrito-diamante-logo.png"
+          alt="Distrito Diamante CRM"
+          width={200}
+          height={80}
+          priority
+        />
+      </div>
       <Menu />
       <div className="card shadow mb-4">
         <div className="card-body">

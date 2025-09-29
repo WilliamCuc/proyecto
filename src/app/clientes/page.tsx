@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   getClientes,
   addCliente,
   deleteCliente,
-  updateCliente, // Asegúrate de tener esta función en clientesService
+  updateCliente,
 } from "../../services/clientesService";
 import { Cliente } from "../../models/Cliente";
 import "./modal-anim.css";
@@ -122,7 +123,15 @@ export default function ClientesPage() {
   return (
     <ProtectedRoute>
       <div className="container">
-        <div className="header-logo text-center mt-5 mb-3">Clientes</div>
+        <div className="d-flex justify-content-center mt-2 mb-3">
+          <Image
+            src="/images/logos/distrito-diamante-logo.png"
+            alt="Distrito Diamante CRM"
+            width={200}
+            height={80}
+            priority
+          />
+        </div>
         <Menu />
         <div className="card shadow mb-4">
           <div className="card-body">

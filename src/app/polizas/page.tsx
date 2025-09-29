@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { Poliza } from "../../models/Poliza";
 import { PolizasService } from "../../services/polizasService";
 import { getClientes } from "../../services/clientesService";
@@ -183,7 +184,15 @@ export default function PolizasPage() {
   return (
     <ProtectedRoute>
       <div className="container">
-        <div className="header-logo text-center mt-5 mb-3">Pólizas</div>
+        <div className="d-flex justify-content-center mt-2 mb-3">
+          <Image
+            src="/images/logos/distrito-diamante-logo.png"
+            alt="Distrito Diamante CRM"
+            width={200}
+            height={80}
+            priority
+          />
+        </div>
         <Menu />
         <div className="card shadow mb-4">
           <div className="card-body">
