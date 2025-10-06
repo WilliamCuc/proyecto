@@ -99,8 +99,11 @@ export default function Menu() {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link d-flex align-items-center" href="/alertas">
-              <FaBell className="me-2" /> <span>Alertas</span>
+            <a
+              className="nav-link d-flex align-items-center"
+              href="/recordatorios"
+            >
+              <FaBell className="me-2" /> <span>Recordatorios</span>
             </a>
           </li>
           <li className="nav-item">
